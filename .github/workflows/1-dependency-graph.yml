@@ -19,7 +19,7 @@ env:
 jobs:
   find_exercise:
     name: Find Exercise Issue
-    uses: skills/exercise-toolkit/.github/workflows/find-exercise-issue.yml@v0.7.3
+    uses: skills/exercise-toolkit/.github/workflows/find-exercise-issue.yml@fb55bbbfb8cd7b63862f741ae2e483f81fea3d56 # v0.7.3
     if: |
       github.run_number != 1
 
@@ -35,10 +35,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Get response templates
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: skills/exercise-toolkit
           path: exercise-toolkit
@@ -46,14 +46,14 @@ jobs:
 
       - name: Find last comment
         id: find-last-comment
-        uses: peter-evans/find-comment@v4
+        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
           direction: last
 
       - name: Update comment - checking work
-        uses: GrantBirki/comment@v2.1.1
+        uses: GrantBirki/comment@608e41b19bc973020ec0e189ebfdae935d7fe0cc # v2.1.1
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
@@ -79,13 +79,13 @@ jobs:
       - name: Check package-lock.json
         id: check-keyphrase
         continue-on-error: true
-        uses: skills/action-keyphrase-checker@v1
+        uses: skills/action-keyphrase-checker@7f463836f6c105e85a182487ae4b628ff61cb904 # v1
         with:
           text-file: ${{ env.FOLLOW_REDIRECTS_FILE }}
           keyphrase: "1\\.14\\.1"
 
       - name: Update comment - step results
-        uses: GrantBirki/comment@v2.1.1
+        uses: GrantBirki/comment@608e41b19bc973020ec0e189ebfdae935d7fe0cc # v2.1.1
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
@@ -116,17 +116,17 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Get response templates
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: skills/exercise-toolkit
           path: exercise-toolkit
           ref: v0.7.3
 
       - name: Create comment - step finished
-        uses: GrantBirki/comment@v2.1.1
+        uses: GrantBirki/comment@608e41b19bc973020ec0e189ebfdae935d7fe0cc # v2.1.1
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
@@ -135,14 +135,14 @@ jobs:
             next_step_number: 2
 
       - name: Create comment - add step content
-        uses: GrantBirki/comment@v2.1.1
+        uses: GrantBirki/comment@608e41b19bc973020ec0e189ebfdae935d7fe0cc # v2.1.1
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
           file: ${{ env.STEP_2_FILE }}
 
       - name: Create comment - watching for progress
-        uses: GrantBirki/comment@v2.1.1
+        uses: GrantBirki/comment@608e41b19bc973020ec0e189ebfdae935d7fe0cc # v2.1.1
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}

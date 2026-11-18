@@ -1,0 +1,26 @@
+name: Validate supported runtime and dependency security
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5
+        with:
+          dotnet-version: '10.0.x'
+      - name: Test supported .NET LTS projects and reject NuGet advisories
+        run: dotnet test code/Bootcamp.sln -p:NuGetAudit=true -p:NuGetAuditMode=all -p:NuGetAuditLevel=low -warnaserror:NU1901,NU1902,NU1903,NU1904
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24.22.3'
+          cache: npm
+          cache-dependency-path: code/src/AttendeeSite/package-lock.json
+      - name: Check the training dependency graph
+        working-directory: code/src/AttendeeSite
+        run: npm ci --no-audit --no-fund && npm audit --audit-level=low

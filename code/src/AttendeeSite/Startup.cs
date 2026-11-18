@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace AttendeeSite
 {
@@ -42,6 +42,11 @@ namespace AttendeeSite
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AttendeeSite v1"));
+            }
+
+            if (!env.IsDevelopment())
+            {
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();
